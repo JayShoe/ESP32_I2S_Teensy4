@@ -24,22 +24,22 @@
  * THE SOFTWARE.
  */
 
-#ifndef _input_i2s_esp32_h_
-#define _input_i2s_esp32_h_
+#if defined(__IMXRT1052__) || defined(__IMXRT1062__)
+#ifndef _input_i2s2_h_
+#define _input_i2s2_h_
 
 #include "Arduino.h"
 #include "AudioStream.h"
 #include "DMAChannel.h"
 
-class AudioInputI2S_ESP32 : public AudioStream
+class AudioInputI2S2_ESP32 : public AudioStream
 {
 public:
-	AudioInputI2S_ESP32(void) : AudioStream(0, NULL) { begin(); }
+	AudioInputI2S2_ESP32(void) : AudioStream(0, NULL) { begin(); }
 	virtual void update(void);
 	void begin(void);
-	uint32_t getCounter() const;
-protected:	
-	AudioInputI2S_ESP32(int dummy): AudioStream(0, NULL) {} // to be used only inside AudioInputI2Sslave_ESP32 !!
+protected:
+	AudioInputI2S2_ESP32(int dummy): AudioStream(0, NULL) {} // to be used only inside AudioInputI2Sslave !!
 	static bool update_responsibility;
 	static DMAChannel dma;
 	static void isr(void);
@@ -50,12 +50,13 @@ private:
 };
 
 
-class AudioInputI2Sslave_ESP32 : public AudioInputI2S_ESP32
+class AudioInputI2S2_ESP32slave : public AudioInputI2S2_ESP32
 {
 public:
-	AudioInputI2Sslave_ESP32(void) : AudioInputI2S_ESP32(0) { begin(); }
+	AudioInputI2S2slave_ESP32(void) : AudioInputI2S2_ESP32(0) { begin(); }
 	void begin(void);
 	friend void dma_ch1_isr(void);
 };
 
 #endif
+#endif //#if defined(__IMXRT1052__) || defined(__IMXRT1062__)

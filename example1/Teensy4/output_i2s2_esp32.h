@@ -24,30 +24,24 @@
  * THE SOFTWARE.
  */
 
-#ifndef output_i2s_esp32_h_
-#define output_i2s_esp32_h_
+#if defined(__IMXRT1052__) || defined(__IMXRT1062__)
+#ifndef output_i2s2_h_
+#define output_i2s2_h_
 
 #include "Arduino.h"
 #include "AudioStream.h"
 #include "DMAChannel.h"
 
-class AudioOutputI2S_ESP32 : public AudioStream
+
+class AudioOutputI2S2_ESP32 : public AudioStream
 {
 public:
-	AudioOutputI2S_ESP32(void) : AudioStream(2, inputQueueArray) { begin(); }
+	AudioOutputI2S2_ESP32(void) : AudioStream(2, inputQueueArray) { begin(); }
 	virtual void update(void);
 	void begin(void);
-	friend class AudioInputI2S_ESP32;
-#if defined(__IMXRT1062__)
-	friend class AudioOutputI2SQuad;
-	friend class AudioInputI2SQuad;
-	friend class AudioOutputI2SHex;
-	friend class AudioInputI2SHex;
-	friend class AudioOutputI2SOct;
-	friend class AudioInputI2SOct;
-#endif
+	friend class AudioInputI2S2;
 protected:
-	AudioOutputI2S_ESP32(int dummy): AudioStream(2, inputQueueArray) {} // to be used only inside AudioOutputI2Sslave_ESP32 !!
+	AudioOutputI2S2_ESP32(int dummy): AudioStream(2, inputQueueArray) {} // to be used only inside AudioOutputI2Sslave !!
 	static void config_i2s(void);
 	static audio_block_t *block_left_1st;
 	static audio_block_t *block_right_1st;
@@ -63,15 +57,17 @@ private:
 };
 
 
-class AudioOutputI2Sslave_ESP32 : public AudioOutputI2S_ESP32
+class AudioOutputI2S2slave_ESP32 : public AudioOutputI2S2_ESP32
 {
 public:
-	AudioOutputI2Sslave_ESP32(void) : AudioOutputI2S_ESP32(0) { begin(); } ;
+	AudioOutputI2S2slave_ESP32(void) : AudioOutputI2S2_ESP32(0) { begin(); } ;
 	void begin(void);
-	friend class AudioInputI2Sslave_ESP32;
+	friend class AudioInputI2S2slave;
 	friend void dma_ch0_isr(void);
 protected:
 	static void config_i2s(void);
 };
 
+
 #endif
+#endif //defined(__IMXRT1062__)
