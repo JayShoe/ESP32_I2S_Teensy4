@@ -1,9 +1,9 @@
 #include <arduino.h>
 #include "esp32_bt_music_receiver.h"
 
-#define CONFIG_EXAMPLE_I2S_LRCK_PIN 23
-#define CONFIG_EXAMPLE_I2S_BCK_PIN 22
-#define CONFIG_EXAMPLE_I2S_DATA_PIN 19
+#define CONFIG_EXAMPLE_I2S_BCK_PIN 26 // (A0 on huzzah32)
+#define CONFIG_EXAMPLE_I2S_LRCK_PIN 25 // (A1 on huzzah32)
+#define CONFIG_EXAMPLE_I2S_DATA_PIN 21 // (A5 on huzzah32)
 
 BlootoothA2DSink a2d_sink;
 
