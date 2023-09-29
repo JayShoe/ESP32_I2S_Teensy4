@@ -69,6 +69,7 @@ public:
 	AudioOutputI2Sslave_ESP32(void) : AudioOutputI2S_ESP32(0) { begin(); } ;
 	void begin(void);
 	friend class AudioInputI2Sslave_ESP32;
+	friend class AsyncAudioInputI2Sslave_esp32;
 	friend void dma_ch0_isr(void);
 protected:
 	static void config_i2s(void);
